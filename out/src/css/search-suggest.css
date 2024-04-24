@@ -1,0 +1,23 @@
+.suggestion-box {
+    z-index: 999;
+    position: absolute;
+    background-color: white;
+    margin: 5px 0 0;
+    padding: 0;
+    width: 100%;
+    border: 1px solid rgb(204, 204, 204);
+    border-radius: 5px;
+}
+
+ul.suggestion-box {
+    list-style-type: none;
+}
+
+ul.suggestion-box li {
+    padding: 10px;
+    border-bottom: black;
+}
+
+ul.suggestion-box li:hover{
+    background-color: rgba(0, 0, 0, 0.2);
+}
