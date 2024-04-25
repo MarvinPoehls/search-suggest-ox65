@@ -33,3 +33,7 @@ ul.suggestion-box li:hover{
     margin: 0;
     color: #818181;
 }
+
+.suggestion-img {
+    margin-right: 10px;
+}

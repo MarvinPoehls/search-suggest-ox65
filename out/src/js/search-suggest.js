@@ -41,7 +41,7 @@ function getSuggestions(searchbar) {
 
                     suggestionBox.append("" +
                         "<li onclick=\"window.location.href = $(this).children().first().attr('href')\">" +
-                            "<img src='"+ article.image +"'>" +
+                            "<img src='"+ article.image +"' class='suggestion-img' height='30' alt>" +
                             "<a href='" + article.href + "'>" + highlightSearchedValue(searchbar.value, article.title) + "</a>" +
                         "</li>");
                 }

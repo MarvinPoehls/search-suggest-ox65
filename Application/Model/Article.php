@@ -63,4 +63,17 @@ class Article extends Article_parent
         }
         return $articles;
     }
+
+    public function fcGetMainPic(): string
+    {
+        $mainImageFilename = $this->oxarticles__oxpic1->value;
+        $baseUrl = \OxidEsales\Eshop\Core\Registry::getConfig()->getShopUrl();
+        $imagePath = \OxidEsales\Eshop\Core\Registry::getConfig()->getConfigParam('sArticlePicDir');
+
+        if (empty($imagePath)) {
+            $imagePath = 'out/pictures/master/product/1/';
+        }
+
+        return $baseUrl . $imagePath . $mainImageFilename;
+    }
 }

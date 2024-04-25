@@ -24,7 +24,7 @@ class FcSuggestionsController extends FrontendController
         foreach ($articles as $article) {
             $data[] = [
                 'title' => $article->oxarticles__oxtitle->value,
-                'image' => $article->oxarticles__oxpic1->value,
+                'image' => $article->fcGetMainPic(),
                 'href' => $article->getLink()
             ];
         }
