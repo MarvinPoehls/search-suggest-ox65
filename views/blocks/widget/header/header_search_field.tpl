@@ -1,1 +1,1 @@
-<input class="form-control" onkeyup="getSuggestions(this)" onblur="$('#suggestionBox').hide();" autocomplete="off" type="text" id="searchParam" name="searchparam" value="[{$oView->getSearchParamForHtml()}]" placeholder="[{oxmultilang ident="SEARCH"}]">
+<input class="form-control" onkeyup="getSuggestions(this)" autocomplete="off" type="text" id="searchParam" name="searchparam" value="[{$oView->getSearchParamForHtml()}]" placeholder="[{oxmultilang ident="SEARCH"}]">

@@ -15,9 +15,21 @@ ul.suggestion-box {
 
 ul.suggestion-box li {
     padding: 10px;
-    border-bottom: black;
+    width: 100%;
+}
+
+ul.suggestion-box li a,
+ul.suggestion-box li a:hover{
+    text-decoration: none;
+    color: black;
 }
 
 ul.suggestion-box li:hover{
     background-color: rgba(0, 0, 0, 0.2);
+}
+
+.no-suggestions {
+    padding: 10px;
+    margin: 0;
+    color: #818181;
 }

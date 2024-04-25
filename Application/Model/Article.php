@@ -11,12 +11,56 @@ class Article extends Article_parent
     {
         $queryBuilder = ContainerFactory::getInstance()->getContainer()->get(QueryBuilderFactoryInterface::class)->create();
 
+        $searchParam = str_replace(' ', '%', urldecode($searchParam));
+
         $queryBuilder
             ->select('*')
             ->from('oxarticles')
-            ->where($queryBuilder->expr()->like('oxtitle', $queryBuilder->createNamedParameter("%$searchParam%")))
+            ->where($queryBuilder->expr()->like('OXTITLE', $queryBuilder->createNamedParameter("%$searchParam%")))
             ->setMaxResults(5);
 
-        return $queryBuilder->execute()->fetchAllAssociative();
+        $result = $queryBuilder->execute()->fetchAllAssociative();
+
+        $articles = [];
+        foreach ($result as $data) {
+            $article = oxNew(self::class);
+            $article->assign($data);
+            $articles[] = $article;
+        }
+        return $articles;
+    }
+
+    public function fcGetAdditionalSuggestions($searchParam, $amount): array
+    {
+        $queryBuilder = ContainerFactory::getInstance()->getContainer()->get(QueryBuilderFactoryInterface::class)->create();
+
+        $searchParam = str_replace(' ', '%', urldecode($searchParam));
+
+        $queryBuilder
+            ->select('*')
+            ->from('oxarticles')
+            ->leftJoin(
+                'oxarticles',
+                'oxartextends',
+                'oxartextends',
+                'oxartextends.oxid = oxarticles.oxid'
+            )
+            ->where(
+                $queryBuilder->expr()->andX(
+                    $queryBuilder->expr()->like('OXLONGDESC', $queryBuilder->createNamedParameter("%$searchParam%")),
+                    $queryBuilder->expr()->notLike('OXTITLE', $queryBuilder->createNamedParameter("%$searchParam%"))
+                )
+            )
+            ->setMaxResults($amount);
+
+        $result = $queryBuilder->execute()->fetchAllAssociative();
+
+        $articles = [];
+        foreach ($result as $data) {
+            $article = oxNew(self::class);
+            $article->assign($data);
+            $articles[] = $article;
+        }
+        return $articles;
     }
 }

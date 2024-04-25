@@ -25,7 +25,7 @@ $aModule = [
         [
             'template' => 'widget/header/search.tpl',
             'block' => 'dd_widget_header_search_form_inner',
-            'file' => 'views/blocks/widget/header/dd_widget_header_search_form_inner.tpl',
+            'file' => 'views/blocks/widget/header/search_suggestions_dd_widget_header_search_form_inner.tpl',
         ],
         [
             'template' => 'widget/header/search.tpl',
