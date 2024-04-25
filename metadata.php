@@ -17,7 +17,8 @@ $aModule = [
         'fcGetSuggestions' => FcSuggestionsController::class,
     ],
     'extend'      => [
-        \OxidEsales\Eshop\Application\Model\Article::class => \Marvin\SearchSuggest\Model\Article::class
+        \OxidEsales\Eshop\Application\Model\Article::class => \Marvin\SearchSuggest\Model\Article::class,
+        \OxidEsales\Eshop\Application\Model\Category::class => \Marvin\SearchSuggest\Model\Category::class,
     ],
     'settings'    => [],
     'events'      => [],

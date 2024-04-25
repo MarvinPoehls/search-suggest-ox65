@@ -2,29 +2,36 @@
     z-index: 999;
     position: absolute;
     background-color: white;
+    width: calc(100% - 30px);
     margin: 5px 0 0;
-    padding: 0;
-    width: 100%;
+    padding: 5px;
     border: 1px solid rgb(204, 204, 204);
     border-radius: 5px;
 }
 
-ul.suggestion-box {
+.suggestion-list {
+    padding: 0;
+    margin: 0;
+}
+
+ul.suggestion-list {
     list-style-type: none;
 }
 
-ul.suggestion-box li {
+ul.suggestion-list li {
+    display: inline-block;
     padding: 10px;
     width: 100%;
+    height: 50px;
 }
 
-ul.suggestion-box li a,
-ul.suggestion-box li a:hover{
+ul.suggestion-list li a,
+ul.suggestion-list li a:hover{
     text-decoration: none;
     color: black;
 }
 
-ul.suggestion-box li:hover{
+ul.suggestion-list li:hover{
     background-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -36,4 +43,39 @@ ul.suggestion-box li:hover{
 
 .suggestion-img {
     margin-right: 10px;
+}
+
+.col-sm-9.p-0 {
+    padding: 0; !important;
+}
+
+.col-sm-3.p-0 {
+    padding: 0; !important;
+}
+
+@media (min-width: 768px) {
+    .seperator {
+        border-right: 1px solid rgb(204, 204, 204);
+    }
+}
+
+@media (max-width: 768px) {
+    .seperator {
+        border-bottom: 1px solid rgb(204, 204, 204);
+    }
+}
+
+@media (min-width: 992px) {
+    .w-lg-50 {
+        width: 50vw; !important;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+@media (max-width: 992px) {
+    .w-lg-50 {
+        left: 30px;
+        right: 30px;
+    }
 }

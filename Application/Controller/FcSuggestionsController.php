@@ -4,6 +4,7 @@ namespace Marvin\SearchSuggest\Controller;
 
 use OxidEsales\Eshop\Application\Controller\FrontendController;
 use OxidEsales\Eshop\Application\Model\Article;
+use OxidEsales\Eshop\Application\Model\Category;
 use OxidEsales\Eshop\Core\Request;
 
 class FcSuggestionsController extends FrontendController
@@ -15,17 +16,22 @@ class FcSuggestionsController extends FrontendController
 
         $article = oxNew(Article::class);
         $articles = $article->fcGetSuggestions($searchParam);
-
-        if (count($articles) < 5) {
-            $articles = array_merge($articles, $article->fcGetAdditionalSuggestions($searchParam, 5 - count($articles)));
-        }
+        $category = oxNew(Category::class);
+        $categories = $category->fcGetSuggestions($searchParam);
 
         $data = [];
         foreach ($articles as $article) {
-            $data[] = [
+            $data['articles'][] = [
                 'title' => $article->oxarticles__oxtitle->value,
                 'image' => $article->fcGetMainPic(),
                 'href' => $article->getLink()
+            ];
+        }
+
+        foreach ($categories as $category) {
+            $data['categories'][] = [
+                'title' => $category->oxcategories__oxtitle->value,
+                'href' => $category->getLink()
             ];
         }
 

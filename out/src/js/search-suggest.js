@@ -1,6 +1,8 @@
 let hideTimer;
 let searchbar = $('#searchParam');
 let suggestionBox = $('#suggestionBox');
+let suggestionBoxArticles = $('#suggestionBoxArticles');
+let suggestionBoxCategories = $('#suggestionBoxCategories');
 
 suggestionBox.parent().attr('onfocusout', 'hideSuggestions()');
 
@@ -16,9 +18,9 @@ searchbar.on('focus', function() {
     clearTimeout(hideTimer);
 });
 
-// Show suggestions when the input is clicked
+// Show suggestions when the input is clicked and the suggestionBox has children
 searchbar.on('click', function() {
-    if (suggestionBox.children().length > 0) {
+    if (suggestionBoxArticles.children().length > 0 || suggestionBoxCategories.children().length > 0) {
         suggestionBox.show();
     }
 });
@@ -26,7 +28,7 @@ searchbar.on('click', function() {
 function getSuggestions(searchbar) {
     if (searchbar.value.length >= 3) {
         $.ajax({
-            url: "index.php/?cl=fcGetSuggestions",
+            url: shoproot + "index.php/?cl=fcGetSuggestions",
             type: "POST",
             data: {
                 searchParam: encodeURIComponent(searchbar.value),
@@ -34,27 +36,47 @@ function getSuggestions(searchbar) {
             success: function(suggestions){
                 suggestions = JSON.parse(suggestions);
 
-                suggestionBox.empty();
+                suggestionBoxArticles.empty();
+                suggestionBoxCategories.empty();
 
-                for (let key in suggestions) {
-                    let article = suggestions[key];
+                for (let key in suggestions.articles) {
+                    let article = suggestions.articles[key];
 
-                    suggestionBox.append("" +
-                        "<li onclick=\"window.location.href = $(this).children().first().attr('href')\">" +
+                    suggestionBoxArticles.append("" +
+                        "<li onclick=\"window.location.href = $(this).children('a').first().attr('href')\">" +
                             "<img src='"+ article.image +"' class='suggestion-img' height='30' alt>" +
                             "<a href='" + article.href + "'>" + highlightSearchedValue(searchbar.value, article.title) + "</a>" +
                         "</li>");
                 }
 
-                if (suggestionBox.children().length === 0) {
-                    suggestionBox.append('<p class="no-suggestions">Keine Artikel zu "'+ searchbar.value +'" gefunden</p>');
+                for (let key in suggestions.categories) {
+                    let category = suggestions.categories[key];
+
+                    suggestionBoxCategories.append(
+                        "<li onclick=\"window.location.href = $(this).children('a').first().attr('href')\">" +
+                            "<a href='" + category.href + "'>" + highlightSearchedValue(searchbar.value, category.title) + "</a>" +
+                        "</li>"
+                    );
+                }
+
+                if (suggestionBoxArticles.children().length === 0) {
+                    suggestionBoxArticles.append('<p class="no-suggestions">Keine Artikel zu "'+ searchbar.value +'" gefunden</p>');
+                }
+
+                console.log("Articles: " + suggestionBoxArticles.children("li").length)
+                console.log("Categories: " + suggestionBoxCategories.children("li").length)
+                if (suggestionBoxArticles.children("li").length > 0 && suggestionBoxCategories.children("li").length > 0) {
+                    suggestionBoxArticles.addClass('seperator');
+                } else {
+                    suggestionBoxArticles.removeClass('seperator')
                 }
 
                 suggestionBox.show();
             }
         });
     } else {
-        suggestionBox.empty();
+        suggestionBoxCategories.empty();
+        suggestionBoxArticles.empty();
         suggestionBox.hide();
     }
 }

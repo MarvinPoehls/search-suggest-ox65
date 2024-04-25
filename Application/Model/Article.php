@@ -27,10 +27,15 @@ class Article extends Article_parent
             $article->assign($data);
             $articles[] = $article;
         }
+
+        if (count($articles) < 5) {
+            $articles = array_merge($articles, $this->fcGetAdditionalSuggestions($searchParam, 5 - count($articles)));
+        }
+
         return $articles;
     }
 
-    public function fcGetAdditionalSuggestions($searchParam, $amount): array
+    protected function fcGetAdditionalSuggestions($searchParam, $amount): array
     {
         $queryBuilder = ContainerFactory::getInstance()->getContainer()->get(QueryBuilderFactoryInterface::class)->create();
 
