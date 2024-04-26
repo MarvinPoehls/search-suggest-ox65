@@ -2,6 +2,11 @@
   "name": "marvinpoehls/search-suggest",
   "description": "Adding search suggestions to your OXID eShop",
   "type": "oxideshop-module",
+  "require": {
+        "oxid-esales/oxideshop-ce": "^6.5",
+        "twbs/bootstrap": "^4.6",
+        "components/jquery": "^3.6"
+    }
   "authors": [
     {
       "name": "Fatchip",
