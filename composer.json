@@ -1,0 +1,23 @@
+{
+  "name": "marvin/search-suggest",
+  "description": "Adding search suggestions to your OXID eShop",
+  "type": "oxideshop-module",
+  "authors": [
+    {
+      "name": "Fatchip",
+      "email": "support@fatchip.de",
+      "homepage": "https://www.fatchip.de/"
+    }
+  ],
+  "minimum-stability": "dev",
+  "extra": {
+    "oxideshop": {
+      "target-directory": "marvin/search-suggest"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Marvin\\SearchSuggest\\": "./Application"
+    }
+  }
+}
