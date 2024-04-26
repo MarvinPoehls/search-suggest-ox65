@@ -1,5 +1,5 @@
 {
-  "name": "marvin/search-suggest",
+  "name": "marvinpoehls/search-suggest",
   "description": "Adding search suggestions to your OXID eShop",
   "type": "oxideshop-module",
   "authors": [
@@ -12,7 +12,7 @@
   "minimum-stability": "dev",
   "extra": {
     "oxideshop": {
-      "target-directory": "marvin/search-suggest"
+      "target-directory": "marvinpoehls/search-suggest"
     }
   },
   "autoload": {
