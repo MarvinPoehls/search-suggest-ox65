@@ -5,9 +5,9 @@ namespace Marvin\SearchSuggest\Model;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 
-class Category extends Category_parent
+class BaseModel extends BaseModel_parent
 {
-    public function fcGetSuggestions(string $searchParam, string $column): array
+    /**public function fcGetSuggestions(string $searchParam, string $column): array
     {
         $queryBuilder = ContainerFactory::getInstance()->getContainer()->get(QueryBuilderFactoryInterface::class)->create();
 
@@ -27,6 +27,11 @@ class Category extends Category_parent
             $model->assign($data);
             $suggestions[] = $model;
         }
+
+        if (count($suggestions) < 5 && self::class == \OxidEsales\Eshop\Application\Model\Article::class) {
+            $suggestions = array_merge($suggestions, $this->fcGetAdditionalSuggestions($searchParam, 5 - count($suggestions)));
+        }
+
         return $suggestions;
-    }
+    }*/
 }

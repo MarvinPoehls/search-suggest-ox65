@@ -7,7 +7,7 @@ use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInt
 
 class Article extends Article_parent
 {
-    public function fcGetSuggestions($searchParam): array
+    public function fcGetSuggestions(string $searchParam, string $column): array
     {
         $queryBuilder = ContainerFactory::getInstance()->getContainer()->get(QueryBuilderFactoryInterface::class)->create();
 
@@ -15,27 +15,27 @@ class Article extends Article_parent
 
         $queryBuilder
             ->select('*')
-            ->from('oxarticles')
-            ->where($queryBuilder->expr()->like('OXTITLE', $queryBuilder->createNamedParameter("%$searchParam%")))
+            ->from($this->getCoreTableName())
+            ->where($queryBuilder->expr()->like($column, $queryBuilder->createNamedParameter("%$searchParam%")))
             ->setMaxResults(5);
 
         $result = $queryBuilder->execute()->fetchAllAssociative();
 
-        $articles = [];
+        $suggestions = [];
         foreach ($result as $data) {
-            $article = oxNew(self::class);
-            $article->assign($data);
-            $articles[] = $article;
+            $model = oxNew(self::class);
+            $model->assign($data);
+            $suggestions[] = $model;
         }
 
-        if (count($articles) < 5) {
-            $articles = array_merge($articles, $this->fcGetAdditionalSuggestions($searchParam, 5 - count($articles)));
+        if (count($suggestions) < 5) {
+            $suggestions = array_merge($suggestions, $this->fcGetAdditionalSuggestions($searchParam, 5 - count($articles)));
         }
 
-        return $articles;
+        return $suggestions;
     }
 
-    protected function fcGetAdditionalSuggestions($searchParam, $amount): array
+    protected function fcGetAdditionalSuggestions(string $searchParam, int $amount): array
     {
         $queryBuilder = ContainerFactory::getInstance()->getContainer()->get(QueryBuilderFactoryInterface::class)->create();
 

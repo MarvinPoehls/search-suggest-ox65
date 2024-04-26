@@ -63,9 +63,7 @@ function getSuggestions(searchbar) {
                     suggestionBoxArticles.append('<p class="no-suggestions">Keine Artikel zu "'+ searchbar.value +'" gefunden</p>');
                 }
 
-                console.log("Articles: " + suggestionBoxArticles.children("li").length)
-                console.log("Categories: " + suggestionBoxCategories.children("li").length)
-                if (suggestionBoxArticles.children("li").length > 0 && suggestionBoxCategories.children("li").length > 0) {
+                if (suggestionBoxArticles.children().length > 0 && suggestionBoxCategories.children("li").length > 0) {
                     suggestionBoxArticles.addClass('seperator');
                 } else {
                     suggestionBoxArticles.removeClass('seperator')

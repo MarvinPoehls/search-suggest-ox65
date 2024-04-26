@@ -14,28 +14,41 @@ class FcSuggestionsController extends FrontendController
         $requestObject = oxNew(Request::class);
         $searchParam = $requestObject->getRequestParameter('searchParam');
 
-        $article = oxNew(Article::class);
-        $articles = $article->fcGetSuggestions($searchParam);
-        $category = oxNew(Category::class);
-        $categories = $category->fcGetSuggestions($searchParam);
+        $data['articles'] = $this->getArticleData($searchParam);
+        $data['categories'] = $this->getCategoryData($searchParam);
 
-        $data = [];
+        echo json_encode($data);
+        exit;
+    }
+
+    protected function getArticleData($searchParam): array
+    {
+        $article = oxNew(Article::class);
+        $articles = $article->fcGetSuggestions($searchParam, "oxtitle");
+
+        $articleData = [];
         foreach ($articles as $article) {
-            $data['articles'][] = [
+            $articleData[] = [
                 'title' => $article->oxarticles__oxtitle->value,
                 'image' => $article->fcGetMainPic(),
                 'href' => $article->getLink()
             ];
         }
+        return $articleData;
+    }
 
+    protected function getCategoryData($searchParam): array
+    {
+        $category = oxNew(Category::class);
+        $categories = $category->fcGetSuggestions($searchParam, "oxtitle");
+
+        $categoryData = [];
         foreach ($categories as $category) {
-            $data['categories'][] = [
+            $categoryData[] = [
                 'title' => $category->oxcategories__oxtitle->value,
                 'href' => $category->getLink()
             ];
         }
-
-        echo json_encode($data);
-        exit;
+        return $categoryData;
     }
 }

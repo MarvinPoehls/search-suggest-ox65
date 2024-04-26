@@ -19,6 +19,7 @@ $aModule = [
     'extend'      => [
         \OxidEsales\Eshop\Application\Model\Article::class => \Marvin\SearchSuggest\Model\Article::class,
         \OxidEsales\Eshop\Application\Model\Category::class => \Marvin\SearchSuggest\Model\Category::class,
+        \OxidEsales\Eshop\Core\Model\BaseModel::class => \Marvin\SearchSuggest\Model\BaseModel::class,
     ],
     'settings'    => [],
     'events'      => [],
